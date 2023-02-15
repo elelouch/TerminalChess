@@ -13,6 +13,8 @@ public class Chess {
 	private static final String ANSI_RESET = "\u001B[0m";
 	private static final String ANSI_BLACK = "\u001B[30m";
 	private static final String ANSI_WHITE = "\u001B[37m";
+	public static final String ANSI_GREEN = "\u001B[32m";
+	public static final String ANSI_CYAN = "\u001B[36m";
 	private static final String ANSI_GREEN_BACKGROUND = "\u001B[42m"; /*- for black slot*/
 	private static final String ANSI_CYAN_BACKGROUND = "\u001B[46m"; /*- for white slot*/
 
@@ -20,7 +22,8 @@ public class Chess {
 	 * pieceEquivalences is a hashmap for mapping a piece with a character
 	 * in order to print it with more ease
 	 */
-	private static Hashtable<Pieces, Character> piecesEquivalences;
+
+	private static Hashtable<Pieces, String> piecesEquivalences;
 
 	/*-
 	 * Ascii codes to print
@@ -48,19 +51,24 @@ public class Chess {
 				}
 
 				Piece piece = slot.getPiece();
-				if (piece != null) {
+				if (piece != null) { // if there's a piece
 					if (piece.getShade() == BLACK) {
 						styledChar += ANSI_BLACK;
 					} else {
 						styledChar += ANSI_WHITE;
 					}
-					
+
 					styledChar += " " + piecesEquivalences.get(piece.getPieceType()) + " ";
-				}else {
-					styledChar += "   "; // No piece on the slot
+				} else { 
+					/*-	
+					 * If there's no piece we add a "hidden" king to
+					 * keep the spaces equally distributed
+					 */
+					String kingColor = slot.getShade() == BLACK ? ANSI_GREEN : ANSI_CYAN;
+					styledChar += kingColor + " " + piecesEquivalences.get(Pieces.KING)+ " ";
 				}
 
-				styledChar += ANSI_RESET;
+				styledChar += ANSI_RESET; // Reset characters colors
 				System.out.append(styledChar);
 			}
 			System.out.println();

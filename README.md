@@ -2,4 +2,4 @@
 
 In progress.
 
-Chess game made for playing in terminal.
+Terminal based chess game made using unicode standard.

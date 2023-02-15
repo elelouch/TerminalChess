@@ -6,8 +6,6 @@ import java.util.Hashtable;
 import pieces.Pieces;
 import pieces.PieceFactory;
 
-
-
 public class ChessBoardSetup {
 
 	public static final int ROWS = 8;
@@ -20,6 +18,8 @@ public class ChessBoardSetup {
 	private static final int LAST_PAWN_ROW = 6;
 
 	ArrayList<ArrayList<Slot>> board = new ArrayList<ArrayList<Slot>>();
+	Hashtable<Pieces, String> equivalences = new Hashtable<Pieces, String>();
+
 	/*-
 	 * Constructor for setting up the board with the slots
 	 * placed in the right order
@@ -43,6 +43,12 @@ public class ChessBoardSetup {
 				}
 			}
 		}
+		equivalences.put(Pieces.KING, "\u265A");
+		equivalences.put(Pieces.QUEEN, "\u265B");
+		equivalences.put(Pieces.ROOK, "\u265C");
+		equivalences.put(Pieces.BISHOP, "\u265D");
+		equivalences.put(Pieces.KNIGHT, "\u265E");
+		equivalences.put(Pieces.PAWN, "\u265F");
 	}
 
 	/**
@@ -74,27 +80,23 @@ public class ChessBoardSetup {
 		 * And then last two slots will be filled after
 		 * The loop 
 		 */
-		int halfBoard = COLS/2;
+		int halfBoard = COLS / 2;
 		int slotSide = 0;
 		int oppositeSide;
-		
-		while(slotSide < halfBoard) {
+
+		while (slotSide < halfBoard) {
 			int i = slotSide;
 			oppositeSide = COLS - (slotSide + 1);
 			Pieces pieceToCreate = piecesType.get(i);
 
 			ArrayList<Slot> firstPawnRow = board.get(FIRST_PAWN_ROW);
-			firstPawnRow.get(slotSide)
-					.setPiece(pf.createPiece(Pieces.PAWN, Chess.WHITE));
-			firstPawnRow.get(oppositeSide)
-					.setPiece(pf.createPiece(Pieces.PAWN, Chess.WHITE));
+			firstPawnRow.get(slotSide).setPiece(pf.createPiece(Pieces.PAWN, Chess.WHITE));
+			firstPawnRow.get(oppositeSide).setPiece(pf.createPiece(Pieces.PAWN, Chess.WHITE));
 
 			ArrayList<Slot> lastPawnRow = board.get(LAST_PAWN_ROW);
-			lastPawnRow.get(slotSide)
-					.setPiece(pf.createPiece(Pieces.PAWN, Chess.BLACK));
-			lastPawnRow.get(oppositeSide)
-					.setPiece(pf.createPiece(Pieces.PAWN, Chess.BLACK));
-			
+			lastPawnRow.get(slotSide).setPiece(pf.createPiece(Pieces.PAWN, Chess.BLACK));
+			lastPawnRow.get(oppositeSide).setPiece(pf.createPiece(Pieces.PAWN, Chess.BLACK));
+
 			ArrayList<Slot> firstRow = board.get(FIRST_ROW);
 			firstRow.get(slotSide).setPiece(pf.createPiece(pieceToCreate, Chess.WHITE));
 			firstRow.get(oppositeSide).setPiece(pf.createPiece(pieceToCreate, Chess.WHITE));
@@ -102,7 +104,7 @@ public class ChessBoardSetup {
 			lastRow.get(slotSide).setPiece(pf.createPiece(pieceToCreate, Chess.BLACK));
 			lastRow.get(oppositeSide).setPiece(pf.createPiece(pieceToCreate, Chess.BLACK));
 
-			if(slotSide == oppositeSide-1) {
+			if (slotSide == oppositeSide - 1) {
 				pieceToCreate = Pieces.KING;
 				lastRow.get(oppositeSide).setPiece(pf.createPiece(pieceToCreate, Chess.BLACK));
 				firstRow.get(oppositeSide).setPiece(pf.createPiece(pieceToCreate, Chess.WHITE));
@@ -111,15 +113,8 @@ public class ChessBoardSetup {
 		}
 	}
 
-	public Hashtable<Pieces, Character> getEquivalences() {
-		Hashtable<Pieces, Character> newHT = new Hashtable<Pieces, Character>();
-		newHT.put(Pieces.BISHOP, 'b');
-		newHT.put(Pieces.QUEEN, 'Q');
-		newHT.put(Pieces.KING, 'K');
-		newHT.put(Pieces.KNIGHT, 'k');
-		newHT.put(Pieces.PAWN, 'p');
-		newHT.put(Pieces.ROOK, 'r');
-		return newHT;
+	public Hashtable<Pieces, String> getEquivalences() {
+		return equivalences;
 	}
 
 	public ArrayList<ArrayList<Slot>> getBoard() {

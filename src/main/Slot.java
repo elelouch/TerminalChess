@@ -1,38 +1,40 @@
 package main;
+
 import java.util.Arrays;
 import java.util.Objects;
-
 import pieces.Piece;
-import pieces.Pieces;
 
 public class Slot {
 	private Piece piece = null;
 	private boolean shade;
-	int positionPair[] = new int[2]; 		// position will be stored here based on a tuple
+	int positionPair[] = new int[2]; // position will be stored here based on a tuple
 
 	/**
 	 * Construct the slot based on the position
+	 * 
 	 * @param row
 	 * @param col
 	 */
-	Slot(int row, int col){
+	Slot(int row, int col) {
 		this.positionPair[0] = row;
 		this.positionPair[1] = col;
 	}
-	
+
 	/**
 	 * Overloaded constructor with the shade
+	 * 
 	 * @param row
 	 * @param col
 	 * @param shade
 	 */
-	Slot(int row, int col, boolean shade){
-		this(row,col);
+	Slot(int row, int col, boolean shade) {
+		this(row, col);
 		this.shade = shade;
 	}
-	
+
 	/**
 	 * Set of the slot, it can be null
+	 * 
 	 * @param piece
 	 */
 	public void setPiece(Piece piece) {
@@ -41,6 +43,7 @@ public class Slot {
 
 	/**
 	 * get piece
+	 * 
 	 * @return piece held by the slot
 	 */
 	public Piece getPiece() {
@@ -49,6 +52,7 @@ public class Slot {
 
 	/**
 	 * get row
+	 * 
 	 * @return row of the slot
 	 */
 	public int getRow() {
@@ -57,14 +61,16 @@ public class Slot {
 
 	/**
 	 * get column
+	 * 
 	 * @return column of the slot
 	 */
 	public int getCol() {
 		return this.positionPair[1];
 	}
-	
+
 	/**
 	 * get shade AKA color
+	 * 
 	 * @return shade of the color
 	 */
 	public boolean getShade() {
@@ -89,8 +95,7 @@ public class Slot {
 		if (getClass() != obj.getClass())
 			return false;
 		Slot other = (Slot) obj;
-		return Objects.equals(piece, other.piece)
-				&& Arrays.equals(positionPair, other.positionPair)
+		return Objects.equals(piece, other.piece) && Arrays.equals(positionPair, other.positionPair)
 				&& shade == other.shade;
 	}
 
